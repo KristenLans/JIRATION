@@ -1,0 +1,18 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    crack (0.1.8)
+    hashie (1.1.0)
+    httparty (0.7.8)
+      crack (= 0.1.8)
+    jiralicious (0.0.6)
+      hashie (~> 1.1.0)
+      httparty (~> 0.7.8)
+      json (~> 1.6.3)
+    json (1.6.5)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  jiralicious

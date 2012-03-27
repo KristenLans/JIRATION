@@ -1,0 +1,16 @@
+!!!5
+
+%html
+  %head
+    %title JIRATION
+  %body
+    %table#issues{ :cellspacing => 0}
+      %thead
+        %tr
+          %th{ :scope => 'col' } Issue Key
+          %th{ :scope => 'col' } Issue Summary
+      %tbody
+        - @issues.each do |issue|
+          %tr
+            %td= issue.jira_key
+            %td= issue.summary || '&mdash;&mdash;'

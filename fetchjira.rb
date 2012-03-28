@@ -18,7 +18,7 @@ get '/' do
   @issues = result.issues
   # THIS JUST IN: we have issues
   
-  # We need to calculate userpain value
+  # We need to calculate userpain value based on the values of three custom JIRA fields: Type, Urgency, and Impact. User pain= Type * Urgency * Impact / Max Possible Score.
  
   # We need to calculate userpain with maturity
   

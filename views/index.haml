@@ -9,8 +9,12 @@
         %tr
           %th{ :scope => 'col' } Issue Key
           %th{ :scope => 'col' } Issue Summary
+          %th{ :scope => 'col' } Userpain
+          %th{ :scope => 'col' } Userpain wiv Matuurity
       %tbody
-        - @issues.each do |issue|
+        - @issues.reverse.each do |issue|
           %tr
             %td= issue.jira_key
             %td= issue.summary || '&mdash;&mdash;'
+            %td= "%.3f" % issue.pain unless issue.pain.nil?
+            %td= "%.3f" % issue.matuserpain unless issue.matuserpain.nil?

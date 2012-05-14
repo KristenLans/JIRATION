@@ -9,10 +9,12 @@ require './config.rb'
 # we need a web server. We're using the sinatra gem girl!
 require 'sinatra'
 
+
 module Jiralicious
   class Issue
     attr_accessor :pain
     attr_accessor :matuserpain
+    attr_accessor :issue_link
   end
 end
 
@@ -41,12 +43,13 @@ get '/' do
     else
       issue.matuserpain = 0
     end
+    issue.issue_link = "https://jira.eol.org/browse/#{issue.jira_key}"
+    
   end
-
-@issues = @issues.sort_by { |a| [ a.matuserpain ] }
-  
   # We need to sort issues by userpain
+  @issues = @issues.sort_by { |a| [ a.matuserpain ] }
   
+
   # render results to browser
   
   # 

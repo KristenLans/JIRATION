@@ -1,20 +1,28 @@
-!!!5
-
-%html
+!!!
+%html{:lang => "en"}
   %head
+    %meta{:charset => "utf-8"}/
     %title JIRATION
+    %link{:href => "/css/bootstrap.css", :rel => "stylesheet"}/
+    :css
+      body {
+        padding-top: 60px;
+      }
   %body
+    .topbar
+      .fill
+        .container
+          %a.brand{:href => "#"} Jiration
     %table#issues{ :cellspacing => 0}
       %thead
         %tr
           %th{ :scope => 'col' } Issue Key
           %th{ :scope => 'col' } Issue Summary
           %th{ :scope => 'col' } Userpain
-          %th{ :scope => 'col' } Userpain wiv Matuurity
       %tbody
         - @issues.reverse.each do |issue|
           %tr
-            %td= issue.jira_key
+            %td 
+              %a= issue.issue_link
             %td= issue.summary || '&mdash;&mdash;'
-            %td= "%.3f" % issue.pain unless issue.pain.nil?
             %td= "%.3f" % issue.matuserpain unless issue.matuserpain.nil?

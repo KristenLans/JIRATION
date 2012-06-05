@@ -16,7 +16,7 @@ end
 
 # We need to get the issues from JIRA by searching for specific issues
 def fetch_issues
-  result = Jiralicious.search('project = WEB AND issuetype = Bug AND fixVersion = 10408 AND status in (Open, "In Progress", Reopened, "Needs More Information") ORDER BY priority DESC') # Any jql can be used here 
+  result = Jiralicious.search('project = WEB AND (issuetype = "Agile bug" OR issuetype = Bug) AND status in (Open, "In Progress", Reopened, "Needs More Information")') # Any jql can be used here 
   issues = result.issues
   # THIS JUST IN: we have issues
   
@@ -31,7 +31,7 @@ def fetch_issues
       #Age in days of the ticket
       age = (Time.now.to_i - Time.parse(issue.created).to_i)/60/60/24
       #userpain with maturity
-      issue.matuserpain = issue.pain + (age * 0.02)
+      issue.matuserpain = issue.pain + (age * 0.02)/100
     else
       issue.matuserpain = 0
     end

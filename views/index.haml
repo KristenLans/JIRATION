@@ -30,6 +30,7 @@
                     %td
                       %a{:href=> issue.issue_link}= issue.jira_key
                     %td= issue.summary || '&mdash;&mdash;'
-                    %td= "%.3f" % issue.matuserpain unless issue.matuserpain.nil?
+                    %td{ :class => issue.label}
+                      = "%.3f" % issue.matuserpain unless issue.matuserpain.nil?
     #footer
       Footer goes here

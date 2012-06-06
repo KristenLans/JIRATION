@@ -9,6 +9,7 @@ module Jiralicious
     attr_accessor :pain
     attr_accessor :matuserpain
     attr_accessor :issue_link
+    attr_accessor :label
   end
 end
 
@@ -16,7 +17,7 @@ end
 
 # We need to get the issues from JIRA by searching for specific issues
 def fetch_issues
-  result = Jiralicious.search('project = WEB AND (issuetype = "Agile bug" OR issuetype = Bug) AND status in (Open, "In Progress", Reopened, "Needs More Information")') # Any jql can be used here 
+  result = Jiralicious.search('project = WEB AND (issuetype = "Agile bug" OR issuetype = Bug) AND status in (Open, "In Progress", Reopened, "Needs More Information")', :max_results => 100) # Any jql can be used here 
   issues = result.issues
   # THIS JUST IN: we have issues
   
@@ -35,6 +36,13 @@ def fetch_issues
     else
       issue.matuserpain = 0
     end
+    
+    if issue.matuserpain > 0.49
+      issue.label = "ouch"
+    else
+      issue.label = "ugh"
+    end
+    
     issue.issue_link = "https://jira.eol.org/browse/#{issue.jira_key}"
   end
   return issues

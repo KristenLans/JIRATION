@@ -20,7 +20,8 @@ def fetch_issues
   result = Jiralicious.search('project = WEB AND (issuetype = "Agile bug" OR issuetype = Bug) AND status in (Open, "In Progress", Reopened, "Needs More Information")', :max_results => 100) # Any jql can be used here 
   issues = result.issues
   # THIS JUST IN: we have issues
-  
+  # create array for totals calculation
+  pains = Array.new
   # We need to calculate userpain value based on the values of three custom JIRA fields: Type, Urgency, and Impact. User pain= Type * Urgency * Impact / Max Possible Score.
   issues.each do|issue| 
     unless issue.seriousness.nil? || issue.impact.nil? || issue.urgency.nil?
@@ -36,6 +37,8 @@ def fetch_issues
     else
       issue.matuserpain = 0
     end
+    # We need to get the sum of all current userpain scores and show it at the top of the page.
+    pains << issue.matuserpain
     
     if issue.matuserpain > 0.49
       issue.label = "ouch"
@@ -45,5 +48,8 @@ def fetch_issues
     
     issue.issue_link = "https://jira.eol.org/browse/#{issue.jira_key}"
   end
+  @total_pain = pains.inject(:+)
   return issues
 end
+  
+

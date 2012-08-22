@@ -3,6 +3,8 @@ require 'rubygems'
 require 'jiralicious'
 # configuration should be stored outside of this app girl! (private data m'kay! out of version control girl!)
 require './config.rb'
+require 'gruff'
+require 'rmagick'
 
 module Jiralicious
   class Issue
@@ -10,6 +12,8 @@ module Jiralicious
     attr_accessor :matuserpain
     attr_accessor :issue_link
     attr_accessor :label
+    attr_accessor :age
+    
   end
 end
 
@@ -23,7 +27,7 @@ def fetch_issues
   # create array for totals calculation
   pains = Array.new
   # We need to calculate userpain value based on the values of three custom JIRA fields: Type, Urgency, and Impact. User pain= Type * Urgency * Impact / Max Possible Score.
-  issues.each do|issue| 
+  issues.each do|issue|
     unless issue.seriousness.nil? || issue.impact.nil? || issue.urgency.nil?
       seriousness = issue.seriousness['value'].chars.first.to_i
       impact = issue.impact['value'].chars.first.to_i
@@ -31,7 +35,8 @@ def fetch_issues
       # We need to calculate userpain
       issue.pain =  (seriousness * urgency * impact)/175.to_f      
       #Age in days of the ticket
-      age = (Time.now.to_i - Time.parse(issue.created).to_i)/60/60/24
+      age = (Time.now - Time.parse(issue.created))/60/60/24
+      issue.age = age
       #userpain with maturity
       issue.matuserpain = issue.pain + (age * 0.02)/100
     else
@@ -51,5 +56,5 @@ def fetch_issues
   @total_pain = pains.inject(:+)
   return issues
 end
-  
+
 

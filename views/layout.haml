@@ -1,0 +1,17 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}/
+    %title JIRATION
+    %link(rel="stylesheet" href="css/eol.css")
+
+  %body
+    #header
+      .section
+        %h1
+          %a{:href=> "http://eol.org"} Encyclopedia of Life
+    #central
+      .section
+        = yield
+    #footer
+      Footer goes here

@@ -1,40 +1,27 @@
-!!!
-%html{:lang => "en"}
-  %head
-    %meta{:charset => "utf-8"}/
-    %title JIRATION
-    %link(rel="stylesheet" href="css/eol.css")
+#page_heading
+  .site_column
+    %h1 Jiration
+    %p This page lists open bugs on the eol.org website in order of 'user pain'. The user pain score is calculated based on three factors: seriousness, urgency, and impact. The age of the bug is also factored in to the score. If you have a bug to report that is not on this list, please send information to tech@eol.org.
+    %br
+    %p
+      Current total userpain for EOL bugs:
+      = "%.2f" % @total_pain
+    %p
+      %a{:href=> ""}
 
-  %body
-    #header
-      .section
-        %h1
-          %a{:href=> "http://eol.org"} Encyclopedia of Life
-    #central
-      .section
-        #page_heading
-          .site_column
-            %h1 Jiration
-            %p This page lists open bugs on the eol.org website in order of 'user pain'. The user pain score is calculated based on three factors: seriousness, urgency, and impact. The age of the bug is also factored in to the score. If you have a bug to report that is not on this list, please send information to tech@eol.org.
-            %br
-            %p
-              Current total userpain for EOL bugs:
-              = "%.2f" % @total_pain
-        #content
-          .site_column
-            %table.standard
-              %thead
-                %tr
-                  %th{ :scope => 'col' } Issue Key
-                  %th{ :scope => 'col' } Issue Summary
-                  %th{ :scope => 'col' } Userpain
-              %tbody
-                - @issues.reverse.each do |issue|
-                  %tr
-                    %td
-                      %a{:href=> issue.issue_link}= issue.jira_key
-                    %td= issue.summary || '&mdash;&mdash;'
-                    %td{ :class => issue.label}
-                      = "%.3f" % issue.matuserpain unless issue.matuserpain.nil?
-    #footer
-      Footer goes here
+#content
+  .site_column
+    %table.standard
+      %thead
+        %tr
+          %th{ :scope => 'col' } Issue Key
+          %th{ :scope => 'col' } Issue Summary
+          %th{ :scope => 'col' } Userpain
+      %tbody
+        - @issues.reverse.each do |issue|
+          %tr
+            %td
+              %a{:href=> issue.issue_link}= issue.jira_key
+            %td= issue.summary || '&mdash;&mdash;'
+            %td{ :class => issue.label}
+              = "%.3f" % issue.matuserpain unless issue.matuserpain.nil?

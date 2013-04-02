@@ -8,10 +8,10 @@ require 'sinatra'
 require 'json'
 require './lib/jira.rb'
 
-# when a user goes to the root of the app, jiralicious.eol.org, they will see a list of JIRA issues.
+# when a user goes to the root of the app, issues.eol.org, they will see a list of JIRA issues.
 get '/' do
   # We need to sort issues by userpain
-  issues = fetch_issues
+  issues = fetch_issues(params[:project] || "all")
   @issues = issues.sort_by { |a| [ a.matuserpain ] }
   puts issues.class
   # render results to browser
@@ -22,7 +22,7 @@ end
 # We need to output issue key, pain, and age in JSON
 get '/scatterplot.json' do
   content_type :json
-  @issues = fetch_issues
+  @issues = fetch_issues #todo support separate projects
   @issues.select{|issue| not issue.pain.nil? }.map{|issue| { :jira_key => issue.jira_key, :pain => issue.pain, :age => issue.age} }.to_json
 end
 
@@ -30,7 +30,7 @@ end
 
 
 # Show this graph on the page, Girl!
-get '/graph' do
+get '/graph' do #todo support separate projects
   haml :scatterplot, :locals => {:issues => fetch_issues}
 end
 

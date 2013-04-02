@@ -20,8 +20,12 @@ end
 
 
 # We need to get the issues from JIRA by searching for specific issues
-def fetch_issues
-  result = Jiralicious.search('project = WEB AND (issuetype = "Agile bug" OR issuetype = Bug) AND status in (Open, "In Progress", Reopened, "Needs More Information")', :max_results => 100) # Any jql can be used here 
+def fetch_issues(project='all')
+  @available_projects = %w(WEB DATA)
+  unless @available_projects.include? project
+    project = @available_projects.join(",")
+  end
+  result = Jiralicious.search("project in (#{project}) AND (issuetype = \"Agile bug\" OR issuetype = Bug) AND status in (Open, \"In Progress\", Reopened, \"Needs More Information\")", :max_results => 100) # Any jql can be used here 
   issues = result.issues
   # THIS JUST IN: we have issues
   # create array for totals calculation

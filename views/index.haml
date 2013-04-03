@@ -13,12 +13,13 @@
   .site_column
     %form{:action => "/", :method => 'get'} 
       %select{:name => 'project'}
-        %option{:selected => params[:project]}=params[:project].capitalize
+        %option{:selected => params[:project]}=params[:project]
         - @available_projects.each do |project|
           -unless params[:project] == project
-            %option{:value => project}= project.capitalize
-        %option{:value => "All"} All
-        %input(type='submit') 
+            %option{:value => project}= project
+        -unless params[:project] == "All"
+          %option{:value => "All"} All
+        %input{:type => 'submit', :value => "Filter", :class => "button"}
     %table.standard
       %thead
         %tr

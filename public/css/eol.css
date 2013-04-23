@@ -355,7 +355,7 @@ ul + .pagination {
   margin: 0; }
 
 a.button,
-input[type="submit"].button {
+/*input[type="submit"].button {
   padding: 5px 10px 6px 10px;
   overflow: visible;
   font: bold 1.08em Helvetica, Arial, sans-serif;
@@ -415,7 +415,7 @@ input[type="submit"].associated {
     background-color: #1e5587;
     filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#7e9eba, endColorstr=#1e5587);
     background-image: -moz-linear-gradient(100% 100% 90deg, #1e5587, #7e9eba);
-    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#7e9eba), to(#1e5587)); }
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#7e9eba), to(#1e5587)); }*/
 
 .help_text {
   background: #f3f7fa;

@@ -3,8 +3,6 @@ require 'rubygems'
 require 'jiralicious'
 # configuration should be stored outside of this app girl! (private data m'kay! out of version control girl!)
 require './config.rb'
-require 'gruff'
-require 'rmagick'
 
 module Jiralicious
   class Issue

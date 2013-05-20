@@ -1,29 +1,37 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    awesome_print (1.1.0)
     crack (0.1.8)
-    haml (3.1.4)
-    hashie (1.1.0)
-    httparty (0.7.8)
-      crack (= 0.1.8)
-    jiralicious (0.0.6)
-      hashie (~> 1.1.0)
-      httparty (~> 0.7.8)
-      json (~> 1.6.3)
-    json (1.6.5)
-    rack (1.4.1)
-    rack-protection (1.2.0)
+    haml (4.0.2)
+      tilt
+    hashie (2.0.4)
+    httparty (0.11.0)
+      multi_json (~> 1.0)
+      multi_xml (>= 0.5.2)
+    jiralicious (0.2.0)
+      crack (~> 0.1.8)
+      hashie (>= 1.1)
+      httparty (~> 0.11.0)
+      json (~> 1.7.7)
+    json (1.7.7)
+    multi_json (1.7.2)
+    multi_xml (0.5.3)
+    rack (1.5.2)
+    rack-protection (1.5.0)
       rack
-    sinatra (1.3.2)
-      rack (~> 1.3, >= 1.3.6)
-      rack-protection (~> 1.2)
-      tilt (~> 1.3, >= 1.3.3)
-    tilt (1.3.3)
+    sinatra (1.4.2)
+      rack (~> 1.5, >= 1.5.2)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
+    tilt (1.4.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  awesome_print
   haml
   jiralicious
+  json
   sinatra

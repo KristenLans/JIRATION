@@ -45,12 +45,12 @@ def fetch_issues(project='all')
   @tickets = []
   @pains = []
   issues.each do|issue|
-    unless issue['fields'][@seriousness].nil? || issue['fields'][@impact].nil? || issue['fields'][@urgency].nil?
-      seriousness = issue['fields'][@seriousness]['value'].chars.first.to_i
-      impact = issue['fields'][@impact]['value'].chars.first.to_i
-      urgency = issue['fields'][@urgency]['value'].chars.first.to_i
+    # unless issue['fields'][@seriousness].nil? || issue['fields'][@impact].nil? || issue['fields'][@urgency].nil?
+      seriousness = issue['fields'][@seriousness]['value'].chars.first.to_i rescue 0
+      impact = issue['fields'][@impact]['value'].chars.first.to_i rescue 0
+      urgency = issue['fields'][@urgency]['value'].chars.first.to_i rescue 0
       # We need to calculate userpain
-      pain =  (seriousness * urgency * impact)/175.to_f      
+      pain =  (seriousness * urgency * impact)/175.to_f
       #Age in days of the ticket
       ticket = Issue.new
       ticket.key = issue['key']
@@ -62,11 +62,17 @@ def fetch_issues(project='all')
       ticket.summary = issue['fields']['summary']
       ticket.issue_link = "https://jira.eol.org/browse/#{ticket.key}"
       #userpain with maturity
-      ticket.matuserpain = ticket.pain + (ticket.age * 0.02)/100
+      if ticket.pain == 0
+        ticket.matuserpain = 0
+      else
+        ticket.matuserpain = ticket.pain + (ticket.age * 0.02)/100
+      end
+      # ticket.matuserpain = 0  ? ticket.pain == 0 : ticket.pain + (ticket.age * 0.02)/100
     # We need to get the sum of all current userpain scores and show it at the top of the page.
     @pains << ticket.matuserpain
-      @tickets << ticket
+    @total_pain = @pains.inject(:+)
+    @tickets << ticket
     end
-  end
+  # end
   return @tickets 
 end

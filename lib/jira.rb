@@ -20,6 +20,7 @@ class Issue
   attr_accessor :seriousness
   attr_accessor :impact
   attr_accessor :urgency
+  attr_accessor :summary
 end
 
 
@@ -29,13 +30,9 @@ def fetch_issues(project='all')
   unless @available_projects.include? project
     project = @available_projects.join(",")
   end
-  # uri = URI::encode("#{@api_uri}/rest/api/2/search?jql=project in (#{project}) AND (issuetype = \"Agile bug\" OR issuetype = Bug) AND status in (Open, \"In Progress\", Reopened, \"Needs More Information\")&maxResults=100&fields&expand")
-  query = "project in (DATA) AND issuetype in (Bug, 'Agile bug') AND status in (Open, 'In Progress', Reopened, 'Needs More Information')&maxResults=100&fields&expand"
-  uri = URI::encode("#{@api_uri}/rest/api/2/search?jql=#{query}")
-  puts uri
-  # uri = "https://jira.eol.org/rest/api/2/search?jql=project%20in%20(#{project})%20AND%20issuetype%20in%20(Bug,%20'Agile%20bug')%20AND%20status%20in%20(Open,%20'In%20Progress',%20Reopened,%20'Needs%20More%20Information')&maxResults=100&fields&expand"
-  # open(uri, :http_basic_authentication => [@api_username, @api_pass]){|f| ap f.meta  }
-  query = open(uri, :http_basic_authentication => [@api_username, @api_pass]).read
+  query = "project in (#{project}) AND issuetype in (Bug, 'Agile bug') AND status in (Open, 'In Progress', Reopened, 'Needs More Information')&maxResults=100&fields&expand"
+  uri = URI::encode("#{API_URI}/rest/api/2/search?jql=#{query}")
+  query = open(uri, :http_basic_authentication => [API_USERNAME, API_PASS]).read
   result = JSON.parse(query)
   issues = result['issues']
   # THIS JUST IN: we have issues
@@ -62,6 +59,7 @@ def fetch_issues(project='all')
       ticket.impact = impact
       ticket.urgency = urgency
       ticket.pain = pain
+      ticket.summary = issue['fields']['summary']
       ticket.issue_link = "https://jira.eol.org/browse/#{ticket.key}"
       #userpain with maturity
       ticket.matuserpain = ticket.pain + (ticket.age * 0.02)/100
@@ -70,10 +68,5 @@ def fetch_issues(project='all')
       @tickets << ticket
     end
   end
-  # return @tickets
-  return issues
-  # return @tickets
-  
+  return @tickets 
 end
-
-ap fetch_issues('DATA')

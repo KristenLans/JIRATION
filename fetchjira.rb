@@ -13,7 +13,6 @@ get '/' do
   # We need to sort issues by userpain
   issues = fetch_issues(params[:project] || "all")
   @issues = issues.sort_by { |a| [ a.matuserpain ] }
-  puts issues.class
   @project = params[:project] ||= "All"
   # render results to browser
   haml :index, :locals => {:issues => @issues, :project => @project}

@@ -10,6 +10,7 @@ require 'awesome_print'
 # configuration should be stored outside of this app girl! (private data m'kay! out of version control girl!)
 require './config.rb'
 
+
 class Issue
   attr_accessor :key
   attr_accessor :pain
@@ -22,8 +23,6 @@ class Issue
   attr_accessor :urgency
   attr_accessor :summary
 end
-
-
 
 def fetch_issues(project='all')
   @available_projects = %w(WEB DATA)
@@ -75,4 +74,16 @@ def fetch_issues(project='all')
     end
   # end
   return @tickets 
+end
+
+#TODO actually fetch the issues from an API call
+@sprint = %w(OPS-1320,OPS-1456,OPS-1542,OPS-1545,OPS-1546,OPS-1547,OPS-1553, OPS-1290,OPS-1297,OPS-1486,OPS-1490,OPS-1548,OPS-1551,OPS-1556,OPS-1557,OPS-1558,OPS-1560,OPS-1561)
+
+def fetch_sprint
+  query = "issueKey in (#{@sprint.join(' ')})"
+  uri = URI::encode("#{API_URI}/rest/api/2/search?jql=#{query}")
+  query = open(uri, :http_basic_authentication => [API_USERNAME, API_PASS]).read
+  result = JSON.parse(query)
+  issues = result['issues']
+  return issues
 end

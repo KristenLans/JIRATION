@@ -34,3 +34,7 @@ get '/graph' do #todo support separate projects
   haml :scatterplot, :locals => {:issues => fetch_issues}
 end
 
+get '/api' do
+  # need to output issue counts and avg userpain
+  jiration_stats.to_json
+end

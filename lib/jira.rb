@@ -76,6 +76,16 @@ def fetch_issues(project='all')
   return @tickets 
 end
 
+# API should output a count of all issues filtered by project (WEB, DATA)
+# {:avg_userpain => 0.226969696969696969, eol_issue_count => 8, content_issue_count => 420}
+def jiration_stats
+  issues = fetch_issues
+  average_matuserpain = issues.map{|issue|issue.matuserpain}.inject(:+)/issues.count
+  web = issues.select { |issue| issue.key.split("-").first == "WEB" }.count
+  data = issues.select { |issue| issue.key.split("-").first == "DATA" }.count
+  {:avg_userpain => average_matuserpain, :eol_issue_count => web, :content_issue_count => data}
+end
+
 #TODO actually fetch the issues from an API call
 @sprint = %w(OPS-1320,OPS-1456,OPS-1542,OPS-1545,OPS-1546,OPS-1547,OPS-1553, OPS-1290,OPS-1297,OPS-1486,OPS-1490,OPS-1548,OPS-1551,OPS-1556,OPS-1557,OPS-1558,OPS-1560,OPS-1561)
 

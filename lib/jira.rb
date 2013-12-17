@@ -7,8 +7,6 @@ require 'json'
 require 'awesome_print'
 
 # require 'jiralicious'
-# configuration should be stored outside of this app girl! (private data m'kay! out of version control girl!)
-require './config.rb'
 
 
 class Issue
@@ -30,8 +28,8 @@ def fetch_issues(project='all')
     project = @available_projects.join(",")
   end
   query = "project in (#{project}) AND issuetype in (Bug, 'Agile bug') AND status in (Open, 'In Progress', Reopened, 'Needs More Information')&maxResults=100&fields&expand"
-  uri = URI::encode("#{API_URI}/rest/api/2/search?jql=#{query}")
-  query = open(uri, :http_basic_authentication => [API_USERNAME, API_PASS]).read
+  uri = URI::encode("#{ENV['API_URI']}/rest/api/2/search?jql=#{query}")
+  query = open(uri, :http_basic_authentication => [ENV['API_USERNAME'], ENV['API_PASS']]).read
   result = JSON.parse(query)
   issues = result['issues']
   # THIS JUST IN: we have issues

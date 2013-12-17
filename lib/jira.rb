@@ -64,12 +64,12 @@ def fetch_issues(project='all')
       if ticket.pain == 0
         ticket.matuserpain = 0
       else
-        ticket.matuserpain = ticket.pain + (ticket.age * 0.02)/100
+        ticket.matuserpain = ticket.pain + (ticket.age * 0.02)
       end
-      # ticket.matuserpain = 0  ? ticket.pain == 0 : ticket.pain + (ticket.age * 0.02)/100
-    # We need to get the sum of all current userpain scores and show it at the top of the page.
+      # ticket.matuserpain = 0  ? ticket.pain == 0 : ticket.pain + (ticket.age * 0.02)
+    # We need to get the average of all current userpain scores and show it at the top of the page.
     @pains << ticket.matuserpain
-    @total_pain = @pains.inject(:+)
+    @total_pain = @pains.inject(:+)/@pains.count
     @tickets << ticket
     end
   # end
